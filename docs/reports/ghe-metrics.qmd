@@ -31,20 +31,28 @@ tbl01 <- projects %>%
   ) %>% 
   cols_label(
     project_title = "Project Title",
-    thematic_area = "Thematic Area",
+    thematic_area = "Theme",
     country = "Country"
   ) %>% 
-  #tab_style(
-  #  style = cell_text(size = px(11)),
-  #  locations = cells_body(
-  #    columns = project_title:country)
-  #) %>% 
-  opt_stylize(style = 5) %>% 
-  opt_align_table_header(align = "left") 
-
+  tab_style(
+    style = cell_text(size = px(14)),
+    locations = cells_body(
+      columns = project_title:country)
+  ) %>% 
+  tab_style(
+    style = cell_text(weight = "bold"),
+    locations = cells_stub()
+  ) %>% 
+  tab_style(
+    style = cell_text(size = px(24)),
+    locations = cells_row_groups()
+  ) %>% 
+  opt_stylize(style = 3) %>% # 3 and 5 are good PDF options
+  opt_align_table_header(align = "left") %>% 
+  sub_missing(missing_text = "")
 
 gtsave(tbl01, 
-      filename = here::here("figs/tbl01-projects-database.pdf"))
+       filename = here::here("figs/tbl01-projects-database.pdf"))
 
 ```
 
