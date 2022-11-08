@@ -1,0 +1,50 @@
+---
+title: "Untitled"
+format: pdf
+editor: source
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+library(tidyverse)
+library(gt)
+```
+
+```{r}
+projects <- read_csv(here::here("data/processed_data/tbl01-project-database.csv")) %>% 
+  select(-principles) %>% 
+  filter(!is.na(project_title))
+```
+
+# Project Database
+
+```{r}
+
+tbl01 <- projects %>%
+  group_by(degree) %>% 
+  arrange(type) %>% 
+  gt(rowname_col = "type") %>% 
+  tab_header(
+    title = md("**Global Health Engineering - Projects**"),
+    subtitle = "PhD, MSc and BSc Projects in 2021 and 2022"
+  ) %>% 
+  cols_label(
+    project_title = "Project Title",
+    thematic_area = "Thematic Area",
+    country = "Country"
+  ) %>% 
+  #tab_style(
+  #  style = cell_text(size = px(11)),
+  #  locations = cells_body(
+  #    columns = project_title:country)
+  #) %>% 
+  opt_stylize(style = 5) %>% 
+  opt_align_table_header(align = "left") 
+
+
+gtsave(tbl01, 
+      filename = here::here("figs/tbl01-projects-database.pdf"))
+
+```
+

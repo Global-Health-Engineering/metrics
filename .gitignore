@@ -42,4 +42,4 @@ vignettes/*.pdf
 .DS_Store
 
 # Data folder
-data
+unprocessed_data
